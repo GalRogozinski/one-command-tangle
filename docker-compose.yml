@@ -24,12 +24,14 @@ services:
     network_mode: host
     image: "iotaledger/iri:latest"
     ports:
-      - "${IRI_PORT}:${IRI_PORT}"
-      - "5556:5556"
+      - "14266:14266"
+      - "15601:15601"
     volumes: 
       - ./config/snapshot.txt:/snapshot.txt
       - ./db:/iri/data
     command: >-
+      ${EXTRA_IRI_FLAGS}      
+      -t ${IRI_TCP_PORT}
       --port ${IRI_PORT}      
       --testnet true
       --remote true
@@ -43,3 +45,4 @@ services:
       --milestone-keys 20
       --snapshot /snapshot.txt
       --max-depth 1000 
+      --auto-tethering true
